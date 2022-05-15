@@ -8,7 +8,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            $("#headers").load("header.html");
+            $("#headers").load("header.jsp");
         });
     </script>
 </head>
