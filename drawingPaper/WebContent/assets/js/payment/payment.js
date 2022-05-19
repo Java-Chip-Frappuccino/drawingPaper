@@ -136,7 +136,7 @@ function ticketChange() {
             $('#ticketprice2').text(tp1);
             $('#ticketinfo').text(ti);
             // input hidden에 금액 추가( rune)
-            $('input[name="pay_price"]').val(tp1);
+            $('input[name="pay_price"]').val(100);
         } else{
             let e = $("#btn").val().split(",").join("");
             
