@@ -2,7 +2,10 @@
 
 // 티켓 변경 팝업창 - 후원 금액 계산
 var res = 0;
-const fixedPrice = 35100; //전 페이지에서 가져올 고정된 값
+//------------------------------------
+const fixedPrice = 1000; //전 페이지에서 가져올 고정된 값
+// 가져오는데 고정값???------------------
+
 function ticketMoney(money) {
     // input 입력값
     splitmoney = document.getElementById('btn').value.split(",").join("");
@@ -32,7 +35,6 @@ function ticketMoney(money) {
     // 버튼 표시
     $('.submit').text(document.getElementById('btn').value + "원 후원하기");
 };
-
 
 // 티켓 변경 팝업창 띄우기
 function ticketChange() {
@@ -322,17 +324,26 @@ $(".paysubmit").click(function () {
 
 // 카카오페이 API
 function kakaoPay(data) {
+	let item_name = "티켓";   				// 프로젝트 네임
+	let pay = 100;    						// 주문 금액
+	let user_email = "arckrich@gmail.com"; 	// 유저 이메일
+	let user_name = "이재원";        			// 유저 네임
+	let user_tel = "01047651536";  			// 유저 연락처
     IMP.init('imp28070210'); // 본인 가맹점 번호 
+
+    // 주문번호  | 계산 필요 (중복 x) 필수값
+    let merchant_uid = "order_no_0001"; 	
+    
     // IMP.request_pay(param, callback) 결제창 호출
-    IMP.request_pay({ // param
-        pg: "kakaopay.TC0ONETIME",  // pg사명.CID
-        pay_method: "card",
-        merchant_uid: "iamport_test_id", // 필수값
-        name: "티켓",
-        amount: 100,
-        buyer_email: "lje1343@gmail.com",
-        buyer_name: "이지은",
-        buyer_tel: "01093171345",
+    IMP.request_pay({
+        pg: "kakaopay.TC0ONETIME",		// pg사명.CID
+        pay_method: "card",      
+        merchant_uid: merchant_uid,  
+        name: item_name,
+        amount: pay,
+        buyer_email: user_email,
+        buyer_name: user_name,
+        buyer_tel: user_tel,
     }, function (rsp) { // 콜백
         if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
             alert("완료 -> imp_uid : " + rsp.imp_uid + "/ merchant_uid(orderKey" + rsp.merchant_uid);
@@ -342,4 +353,21 @@ function kakaoPay(data) {
             history.back(); // 다시 결제 페이지로 이동
         }
     });
+}
+
+// 결제 완료시 실행될 sql 업로드
+function paycomplete(){
+	
+	
+	$.ajax({
+		url:"",
+		type:"post",
+		dataType:"json",
+		success:function(result){
+			
+		},
+		error:function(){
+			console.log("결제 등록 오류");
+		}
+	})
 }

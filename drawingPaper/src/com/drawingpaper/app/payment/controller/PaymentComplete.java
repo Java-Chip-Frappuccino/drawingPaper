@@ -15,26 +15,25 @@ public class PaymentComplete implements Action {
 		// 데이터 베이스 업로드
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
-		
 		PaymentVO vo = new PaymentVO();
 		PaymentDAO dao = new PaymentDAO();
 		ActionForward forward = new ActionForward();
+				
+		vo.setPay_no(  Integer.parseInt( req.getParameter("pay_no")));
+		vo.setUser_no( Integer.parseInt(req.getParameter("user_no")));
+		vo.setPro_no( Integer.parseInt(req.getParameter("pro_no")));
+		vo.setPay_date( req.getParameter("pay_date") );
+		vo.setPay_price( req.getParameter("pay_price") );
+		vo.setPay_merchantuid( req.getParameter("pay_merchantuid") );	
 		
-		private int pay_no;
-		private int user_no;
-		private int pro_no;
-		private String pay_date;
-		private String pay_price;
-		private String pay_merchantuid;
+		dao.payComplete(vo);
 		
-		vo.setPay_no( req.getParameter("pay_no") );
-		vo.setUser_no( req.getParameter("") );
-		vo.setPro_no( req.getParameter("") );
-		vo.setPayment( req.getParameter("") );
-		vo.setPayment( req.getParameter("") );
-		vo.setPayment( req.getParameter("") );
+		//어떻게 보낼 것인가
+		forward.setRedirect(true);
+		// 어덯게 보낼 것인가?
+		forward.setPath(req.getContextPath() + "/payment/Payment.pm");
 		
-		return null;
+		return forward;
 	}
 
 }

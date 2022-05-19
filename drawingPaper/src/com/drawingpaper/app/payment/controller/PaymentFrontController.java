@@ -26,6 +26,20 @@ public class PaymentFrontController  extends HttpServlet {
 		String command = requestURI.substring(contextPath.length());
 		ActionForward af = null;
 		
+		
+		if(command.equals("/payment/PaymentComplete.pm")) { // 결제 정보 업로드 이동
+			try {
+				af = new PaymentComplete().execute(req, resp);
+			} catch (Exception e) {
+				System.out.println("결제 정보 등록 실패" + e);
+			}
+		}else if(command.equals("/payment/Payment.pm")) { // 결제완료시 이동
+			af = new ActionForward();
+			af.setRedirect(false);
+			af.setPath("/app/payment/payment.jsp");
+		}
+		
+		
 		if(af != null) { 
 			if(af.isRedirect()) {
 				resp.sendRedirect(af.getPath());
