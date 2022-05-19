@@ -4,4 +4,16 @@
 <!-- SqlSssion Factory -->
 <mapper namespace="User">
 
+	<!-- 로그인  유효성 체크-->
+	<select id="emailCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(user_email) FROM user
+		WHERE user_email = #{user_email}
+	</select>
+
+	<!-- 로그아웃 유효성 체크-->
+	<select id="pwCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(user_pw) FROM user
+		WHERE user_pw = #{user_pw}
+	</select>
+	
 </mapper>
