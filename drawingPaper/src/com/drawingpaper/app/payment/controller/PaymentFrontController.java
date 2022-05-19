@@ -26,25 +26,13 @@ public class PaymentFrontController  extends HttpServlet {
 		String command = requestURI.substring(contextPath.length());
 		ActionForward af = null;
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		if(af != null) {// af가 null이 아니라면
-			if(af.isRedirect()) {//redirect 방식이라면
-				resp.sendRedirect(af.getPath());//redirect로 전송
+		if(af != null) { 
+			if(af.isRedirect()) {
+				resp.sendRedirect(af.getPath());
 				
-			}else {//forward 방식이라면
+			}else {
 				RequestDispatcher dispatcher = req.getRequestDispatcher(af.getPath());
-				dispatcher.forward(req, resp);//forward로 전송
+				dispatcher.forward(req, resp);
 			}
 		}
 	}

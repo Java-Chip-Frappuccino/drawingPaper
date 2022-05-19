@@ -4,4 +4,12 @@
 <!-- SqlSssion Factory -->
 <mapper namespace="Payment">
 
+	<insert id="payComplete" parameterType="payment">
+		INSERT INTO 
+		(pay_no, user_no, pro_no, pay_date, pay_price, pay_merchantuid)
+		VALUES
+		(${pay_no}, ${user_no}, ${pro_no}, ${pay_date}, ${pay_price}, ${pay_merchantuid})
+	</insert>
+
+
 </mapper>

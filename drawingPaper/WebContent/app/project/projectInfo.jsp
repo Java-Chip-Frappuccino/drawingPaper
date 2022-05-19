@@ -126,9 +126,7 @@
                         <input type="radio" id="tapBtn2" name="tapBtn">
                     </div> -->
                 </div>
-                <!-- <div class="tap1"></div>
-                    <div class="tap2"></div>
-                <!-- =========================================== -->
+
                 <div class="tapSection">
                     <div class="tap1" style="display: ;none">
                         <div>
@@ -137,27 +135,11 @@
                                 <div>
                                     <a class="on" href="">소개</a>
                                 </div>
-                                <!-- <div>
-                                    <a href="">예산</a>
-                                </div>
-                                <div>
-                                    <a href="">일정</a>
-                                </div>
-                                <div>
-                                    <a href="">팀 소개</a>
-                                </div>
-                                <div>
-                                    <a href="">선물 설명</a>
-                                </div>
-                                <div>
-                                    <a href="">신뢰와 안전</a>
-                                </div> -->
+
                             </div>
+                            
                             <div class="tapContent">
-                                <!-- <div>
-                                    커뮤니티 축소판
-                                </div> -->
-                                <!--프로젝트 설명 추가-->
+                                <!--프로젝트 설명 추가  가져온 html 뿌려주면 됨==========================================-->
                                 <div class="storyContent">
                                     <h2 style="text-align: center;"><br>이번엔 &lt;WINNIE-THE-POOH&gt;입니다.</h2>
                                     <p><img
@@ -292,10 +274,10 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- =========================================== -->
+                        <!-- 설명 html 끝=========================================== -->
 
                     </div>
-                    <!-- <div class="tap2"></div> -->
+                    
                     <div class="sidecontent">
                         <div class="sideBox">
                             <div>
@@ -326,18 +308,7 @@
                                 <div class="content2">
                                     영화 '그대가 조국' 제작을 위해 다큐멘터리 전문 감독 및 프로듀서 들이 모였습니다.
                                 </div>
-                                <!-- <div class="sideBtnCell">
-                                    <div>
-                                        <button>
-                                            +윈도우
-                                        </button>
-                                    </div>
-                                    <div>
-                                        <button>
-                                            창작자에게 문의
-                                        </button>
-                                    </div>
-                                </div> -->
+
                             </div>
                         </div>
                         <div class="presentCell">
