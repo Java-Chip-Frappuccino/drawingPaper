@@ -128,12 +128,15 @@ function ticketChange() {
 
     })
     // 티켓 변경시 뜨는 후원하기 버튼
+    
     $(document).on("click", ".submit", function () {
         if(!$("#btn").val()){
             // var donatepay = document.getElementById('btn').value;
             $('#ticketprice').text(tp1);
             $('#ticketprice2').text(tp1);
             $('#ticketinfo').text(ti);
+            // input hidden에 금액 추가( rune)
+            $('input[name="pay_price"]').val(tp1);
         } else{
             let e = $("#btn").val().split(",").join("");
             
@@ -324,35 +327,42 @@ $(".paysubmit").click(function () {
 
 // 카카오페이 API
 function kakaoPay(data) {
-	let item_name = "티켓";   				// 프로젝트 네임
+	let project_name = "티켓";   				// 프로젝트 네임
 	let pay = 100;    						// 주문 금액
 	let user_email = "arckrich@gmail.com"; 	// 유저 이메일
 	let user_name = "이재원";        			// 유저 네임
 	let user_tel = "01047651536";  			// 유저 연락처
-    IMP.init('imp28070210'); // 본인 가맹점 번호 
-
-    // 주문번호  | 계산 필요 (중복 x) 필수값
-    let merchant_uid = "order_no_0001"; 	
-    
-    // IMP.request_pay(param, callback) 결제창 호출
-    IMP.request_pay({
-        pg: "kakaopay.TC0ONETIME",		// pg사명.CID
-        pay_method: "card",      
-        merchant_uid: merchant_uid,  
-        name: item_name,
-        amount: pay,
-        buyer_email: user_email,
-        buyer_name: user_name,
-        buyer_tel: user_tel,
-    }, function (rsp) { // 콜백
-        if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
-            alert("완료 -> imp_uid : " + rsp.imp_uid + "/ merchant_uid(orderKey" + rsp.merchant_uid);
-            location.href='../../app/project/projectinfo.jsp?pro_no=' + pro_no; // 결제 성공 후 펀딩 상세페이지 이동
-        } else {
-            alert("실패 : 코드(" + rsp.error_code + ") / 메세지(" + rsp.error_msg + ")");
-            history.back(); // 다시 결제 페이지로 이동
-        }
-    });
+	
+	console.log(project_name);
+	console.log(pay);
+	console.log(user_email);
+	console.log(user_name);
+	console.log(user_tel);
+	
+//    IMP.init('imp28070210'); // 본인 가맹점 번호 
+//
+//    // 주문번호  | 계산 필요 (중복 x) 필수값
+//    let merchant_uid = "order_no_0001"; 	
+//    
+//    // IMP.request_pay(param, callback) 결제창 호출
+//    IMP.request_pay({
+//        pg: "kakaopay.TC0ONETIME",		// pg사명.CID
+//        pay_method: "card",      
+//        merchant_uid: merchant_uid,  
+//        name: project_name,
+//        amount: pay,
+//        buyer_email: user_email,
+//        buyer_name: user_name,
+//        buyer_tel: user_tel,
+//    }, function (rsp) { // 콜백
+//        if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
+//            alert("완료 -> imp_uid : " + rsp.imp_uid + "/ merchant_uid(orderKey" + rsp.merchant_uid);
+//            location.href='../../app/project/projectinfo.jsp?pro_no=' + pro_no; // 결제 성공 후 펀딩 상세페이지 이동
+//        } else {
+//            alert("실패 : 코드(" + rsp.error_code + ") / 메세지(" + rsp.error_msg + ")");
+//            history.back(); // 다시 결제 페이지로 이동
+//        }
+//    });
 }
 
 // 결제 완료시 실행될 sql 업로드
