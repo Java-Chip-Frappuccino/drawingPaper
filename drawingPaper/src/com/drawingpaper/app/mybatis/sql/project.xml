@@ -4,4 +4,54 @@
 <!-- SqlSssion Factory -->
 <mapper namespace="Project">
 
+	<!-- 내 프로젝트 개수 -->
+	<select id="getMyProjectTotal" resultType="_int">
+		select count(pro_no) 
+		from project
+		where user_no = #{user_no}
+	</select>
+	
+	<!-- 후원한 프로젝트 개수 -->
+	<select id="getSupportProjectTotal" resultType="_int">
+		select count(p.pro_no) 
+		from project p
+		left outer join supporter s
+		on p.user_no = s.user_no
+		where s.user_no = #{user_no}
+	</select>
+	
+	<!-- 관심 프로젝트 개수 -->
+	<select id="getInterestProjectTotal" resultType="_int">
+		select count(p.pro_no) 
+		from project p
+		left outer join interest i
+		on p.user_no = i.user_no
+		where i.user_no = #{user_no}
+	</select>
+	
+	<!-- 내 프로젝트 목록 -->
+	<select id="selectMyProject" parameterType="_int" resultType="ProjectDTO">
+		select pro_title, pro_category, pro_start, pro_end
+		from project
+		where user_no = #{user_no} order by pro_no desc limit #{startRow}, #{rowCount}
+	</select>
+	
+	<!-- 후원한 프로젝트 목록 -->
+	<select id="selectSupportProject" parameterType="_int" resultType = "ProjectDTO">
+		select pro_title, pro_category, pro_start, pro_end
+		from project p
+		left outer join supporter s
+		on p.user_no = s.user_no
+		WHERE s.user_no = #{user_no} order by pro_no desc limit #{startRow}, #{rowCount}
+	</select>
+	
+	<!-- 관심 프로젝트 목록 -->
+	<select id="selectInterestProject" parameterType="_int" resultType = "ProjectDTO">
+		select pro_title, pro_category, pro_start, pro_end
+		from project p
+		left outer join interest i
+		on p.user_no = i.user_no
+		WHERE i.user_no = #{user_no} order by pro_no desc limit #{startRow}, #{rowCount}
+	</select>
+
 </mapper>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <div class="myPageProfileContainer">
+
     <div class="myPageProfileContentHead">
         <em>0</em>
         <div>개의 프로젝트가 있습니다</div>
@@ -15,8 +16,6 @@
             </div>
             <span>관심 프로젝트가 없습니다.</span>
         </div>
-
     </div>
-
 
 </div>
