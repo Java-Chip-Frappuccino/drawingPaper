@@ -39,7 +39,7 @@ public class PaymentFrontController  extends HttpServlet {
 			af.setPath("/app/payment/payment.jsp");
 		}
 		
-		
+	
 		if(af != null) { 
 			if(af.isRedirect()) {
 				resp.sendRedirect(af.getPath());

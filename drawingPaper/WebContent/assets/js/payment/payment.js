@@ -1,11 +1,8 @@
-
+console.log(contextPath);
 
 // 티켓 변경 팝업창 - 후원 금액 계산
 var res = 0;
-//------------------------------------
-const fixedPrice = 1000; //전 페이지에서 가져올 고정된 값
-// 가져오는데 고정값???------------------
-
+const fixedPrice = 35100; //전 페이지에서 가져올 고정된 값
 function ticketMoney(money) {
     // input 입력값
     splitmoney = document.getElementById('btn').value.split(",").join("");
@@ -35,6 +32,7 @@ function ticketMoney(money) {
     // 버튼 표시
     $('.submit').text(document.getElementById('btn').value + "원 후원하기");
 };
+
 
 // 티켓 변경 팝업창 띄우기
 function ticketChange() {
@@ -128,19 +126,18 @@ function ticketChange() {
 
     })
     // 티켓 변경시 뜨는 후원하기 버튼
-    
     $(document).on("click", ".submit", function () {
         if(!$("#btn").val()){
             // var donatepay = document.getElementById('btn').value;
+        	$("input[name='pay_price']").val(tp1.split(",").join(""));
+        	
             $('#ticketprice').text(tp1);
             $('#ticketprice2').text(tp1);
             $('#ticketinfo').text(ti);
-            // input hidden에 금액 추가( rune)
-            $('input[name="pay_price"]').val(100);
         } else{
-            let e = $("#btn").val().split(",").join("");
+            let e = $("#btn").val().split(",").join("");  //숫자에 , 제거
+            $("input[name='pay_price']").val(e); // 히든 input에 금액 추가
             
-           
             if(e < fixedPrice){
                 ti = '티켓 없이 후원하기'
                 console.log("확인1");
@@ -149,7 +146,7 @@ function ticketChange() {
                 $('#ticketprice2').text($("#btn").val())
                 
             }else{
-            //     var donatepay = document.getElementById('btn').value;
+            	// var donatepay = document.getElementById('btn').value;
                 ti = 'STAGE 2 : 종이책 1권 + 펀딩 참여자 크레딧';
                 console.log("확인2");
                 $('#ticketprice').text($("#btn").val());
@@ -157,6 +154,7 @@ function ticketChange() {
                 $('#ticketinfo').text(ti);
             }
         }
+        
         $(".swal2-close").trigger("click");
     })
 
@@ -325,9 +323,14 @@ $(".paysubmit").click(function () {
 });
 
 
+
 // 카카오페이 API
 function kakaoPay(data) {
-	let project_name = "티켓";   				// 프로젝트 네임
+	
+	let formBox = $("#paymentForm");
+	
+	
+	let project_name = $();   				// 프로젝트 네임
 	let pay = 100;    						// 주문 금액
 	let user_email = "arckrich@gmail.com"; 	// 유저 이메일
 	let user_name = "이재원";        			// 유저 네임
@@ -339,38 +342,40 @@ function kakaoPay(data) {
 	console.log(user_name);
 	console.log(user_tel);
 	
-//    IMP.init('imp28070210'); // 본인 가맹점 번호 
-//
-//    // 주문번호  | 계산 필요 (중복 x) 필수값
-//    let merchant_uid = "order_no_0001"; 	
-//    
-//    // IMP.request_pay(param, callback) 결제창 호출
-//    IMP.request_pay({
-//        pg: "kakaopay.TC0ONETIME",		// pg사명.CID
-//        pay_method: "card",      
-//        merchant_uid: merchant_uid,  
-//        name: project_name,
-//        amount: pay,
-//        buyer_email: user_email,
-//        buyer_name: user_name,
-//        buyer_tel: user_tel,
-//    }, function (rsp) { // 콜백
-//        if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
-//            alert("완료 -> imp_uid : " + rsp.imp_uid + "/ merchant_uid(orderKey" + rsp.merchant_uid);
-//            location.href='../../app/project/projectinfo.jsp?pro_no=' + pro_no; // 결제 성공 후 펀딩 상세페이지 이동
-//        } else {
-//            alert("실패 : 코드(" + rsp.error_code + ") / 메세지(" + rsp.error_msg + ")");
-//            history.back(); // 다시 결제 페이지로 이동
-//        }
-//    });
+    IMP.init('imp28070210'); // 본인 가맹점 번호 
+
+    // 주문번호  | 계산 필요 (중복 x) 필수값
+    let merchant_uid = "order_no_0001"; 	
+    
+    // IMP.request_pay(param, callback) 결제창 호출
+    IMP.request_pay({
+        pg: "kakaopay.TC0ONETIME",		// pg사명.CID
+        pay_method: "card",      
+        merchant_uid: merchant_uid,  
+        name: project_name,
+        amount: pay,
+        buyer_email: user_email,
+        buyer_name: user_name,
+        buyer_tel: user_tel,
+    }, function (rsp) { // 콜백
+        if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
+            alert("완료 -> imp_uid : " + rsp.imp_uid + "/ merchant_uid(orderKey" + rsp.merchant_uid);
+            
+            // 결제 내용 저장
+            paycomplete();
+            
+        } else {
+            alert("실패 : 코드(" + rsp.error_code + ") / 메세지(" + rsp.error_msg + ")");
+            history.back(); // 다시 결제 페이지로 이동
+        }
+    });
 }
 
 // 결제 완료시 실행될 sql 업로드
 function paycomplete(){
-	
-	
+
 	$.ajax({
-		url:"",
+		url:"/payment/pamentComplete.pm",
 		type:"post",
 		dataType:"json",
 		success:function(result){
