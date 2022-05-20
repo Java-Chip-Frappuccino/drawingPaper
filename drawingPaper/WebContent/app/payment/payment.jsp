@@ -9,7 +9,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>결제페이지</title>
-        
+      <!-- 
+       -->  
     <link rel="stylesheet" id="alert2" href="../../assets/css/payment/addressAdd.css">
     <link rel="stylesheet" href="../../assets/css/payment/sweetalert2.min.css">
     <link rel="stylesheet" href="../../assets/css/payment/payment.css">
@@ -19,21 +20,23 @@
 
     <!-- iamport.payment.js -->
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-
+	<script type="text/javascript">
+	console.log("결제페이지 입니다.");
+	</script>
 </head>
 <body style="height:2000px">
 
 	<form id="paymentForm">
 	<!-- 결제 api 필요값 -->
-	<input name="project_name" type="hidden" valeu=""><!-- 프로젝트명 -->	
-	<input name="user_email" type="hidden" valeu=""><!-- 사용자 이메일 -->
-	<input name="user_name" type="hidden" valeu=""><!-- 사용자 이름 -->
-	<input name="user_tel" type="hidden" valeu=""><!-- 사용자 번호 -->
-	<input name="pay_price" type="hidden" valeu=""><!-- 결제금액  -->
+	<input name="project_name" type="hidden" value="프로젝트 명1"><!-- 프로젝트명 -->	
+	<input name="user_email" type="hidden" value="유저이메일1"><!-- 사용자 이메일 -->
+	<input name="user_name" type="hidden" value="이재원1"><!-- 사용자 이름 -->
+	<input name="user_tel" type="hidden" value="010-0000-0000"><!-- 사용자 번호 -->
+	<input name="pay_price" type="hidden" value="1000"><!-- 결제금액  -->
 	<!-- 결제 성공시 추가 보내줘야할 값  -->
-	<input name="user_no" type="hidden" valeu=""><!-- 사용자 번호 -->
-	<input name="pro_no" type="hidden" valeu=""><!-- 프로젝트 번호 -->
-	<input name="pay_merchantuid" type="hidden" valeu=""><!-- pay_merchantuid 결제 코드 -->
+	<input name="user_no" type="hidden" value="11"><!-- 사용자 번호 -->
+	<input name="pro_no" type="hidden" value="13"><!-- 프로젝트 번호 -->
+	<input name="pay_merchantuid" type="hidden" value=""><!-- pay_merchantuid 결제 코드 -->
 		
 	</form>
 	
@@ -212,14 +215,14 @@
                 <button class="paysubmit">
                     <span class="span" >후원하기</span>
                 </button>
+                
             </div>
-
-            
-
         </div>
     </div>
+
     <script defer src="../../assets/js/sweetalert2.min.js"></script>
     <script defer src="../../assets/js/jquery-3.6.0.min.js"></script>
+    <script>var contextPath = "${pageContext.request.contextPath}";</script>
     <script defer src="../../assets/js/payment/payment.js"></script>
 
 

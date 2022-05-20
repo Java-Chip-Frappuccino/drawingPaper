@@ -4,11 +4,21 @@
 <!-- SqlSssion Factory -->
 <mapper namespace="Payment">
 
+	<select id="paymentSelect" parameterType="" >
+
+	</select>
+
 	<insert id="payComplete" parameterType="payment">
-		INSERT INTO 
-		(pay_no, user_no, pro_no, pay_date, pay_price, pay_merchantuid)
+		INSERT INTO payment
+		(user_no, pro_no, pay_date, pay_price, pay_merchantuid)
 		VALUES
-		(${pay_no}, ${user_no}, ${pro_no}, ${pay_date}, ${pay_price}, ${pay_merchantuid})
+		(${user_no}, ${pro_no}, now(), ${pay_price}, ${pay_merchantuid})
+	</insert>
+	<insert id="payComplete2" parameterType="payment">
+		INSERT INTO supporter
+		(user_no, pro_no)
+		VALUES
+		(${user_no}, ${pro_no})
 	</insert>
 
 

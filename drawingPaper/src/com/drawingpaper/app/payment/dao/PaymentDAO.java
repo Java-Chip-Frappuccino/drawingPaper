@@ -19,6 +19,7 @@ public class PaymentDAO {
 	
 	// 결제 완료시 결제 정보 업로드
 	public void payComplete( PaymentVO payment ) {
-		sqlSession.selectOne("payment.paycomplete", payment);
+		sqlSession.insert("Payment.payComplete", payment);
+		sqlSession.insert("Payment.payComplete2", payment);
 	}
 }

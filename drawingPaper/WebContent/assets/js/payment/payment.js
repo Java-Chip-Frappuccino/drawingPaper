@@ -1,4 +1,3 @@
-console.log(contextPath);
 
 // 티켓 변경 팝업창 - 후원 금액 계산
 var res = 0;
@@ -279,7 +278,6 @@ $(".paysubmit").click(function () {
     
     // 개인정보 제3자~ 가 체크 x일때
     if ($('#clicked').not(":checked") && $('#clicked2').is(":checked")) {
-        console.log(1);
         Swal.fire({
             html:
                 '<link rel="stylesheet" href="../../assets/css/payment/payeffectcheck1.css"><p id="pp">개인정보 제3자 제공에 동의하셔야 합니다.</p>',
@@ -294,7 +292,6 @@ $(".paysubmit").click(function () {
 
     // 후원 유의사항~ 가 체크 x일때
     if ($('#clicked2').not(":checked") && $('#clicked').is(":checked")) {
-        console.log(2);
         Swal.fire({
             html:
                 '<link rel="stylesheet" href="../../assets/css/payment/payeffectcheck1.css"><p id="pp">후원 유의사항을 확인하셔야 합니다.</p>',
@@ -326,44 +323,40 @@ $(".paysubmit").click(function () {
 
 // 카카오페이 API
 function kakaoPay(data) {
+	//결제 시간에 따른 값
+	let d = new Date();
+	let dateCode =  ""+d.getFullYear()+d.getMonth()+d.getDate()+d.getDate()+d.getHours()+d.getMinutes()+d.getSeconds();
 	
-	let formBox = $("#paymentForm");
+	// 결제코드 생성  날짜시간코드+유저번호+프로젝트번호	
+	let project_name = $("input[name='project_name']").val();// 프로젝트 네임
+	let pay_price = $("input[name='pay_price']").val();// 주문 금액
+	let user_email = $("input[name='project_name']").val();// 유저 이메일
+	let user_name = $("input[name='user_name']").val();// 유저 네임
+	let user_tel = $("input[name='user_tel']").val();// 유저 연락처
 	
-	
-	let project_name = $();   				// 프로젝트 네임
-	let pay = 100;    						// 주문 금액
-	let user_email = "arckrich@gmail.com"; 	// 유저 이메일
-	let user_name = "이재원";        			// 유저 네임
-	let user_tel = "01047651536";  			// 유저 연락처
-	
-	console.log(project_name);
-	console.log(pay);
-	console.log(user_email);
-	console.log(user_name);
-	console.log(user_tel);
-	
-    IMP.init('imp28070210'); // 본인 가맹점 번호 
+	let user_no = $("input[name='user_no']").val();// 사용자 번호
+	let pro_no = $("input[name='pro_no']").val();// 프로젝트 번호
 
-    // 주문번호  | 계산 필요 (중복 x) 필수값
-    let merchant_uid = "order_no_0001"; 	
+	let pay_merchantuid = dateCode+"/"+user_no+"/"+pro_no;// 주문번호  | 계산 필요 (중복 x) 필수값
+		
+    IMP.init('imp28070210'); // 본인 가맹점 번호    
     
-    // IMP.request_pay(param, callback) 결제창 호출
+//     IMP.request_pay(param, callback) // 결제창 호출
     IMP.request_pay({
         pg: "kakaopay.TC0ONETIME",		// pg사명.CID
         pay_method: "card",      
-        merchant_uid: merchant_uid,  
+        merchant_uid: pay_merchantuid,  
         name: project_name,
-        amount: pay,
+        amount: pay_price,
         buyer_email: user_email,
         buyer_name: user_name,
         buyer_tel: user_tel,
     }, function (rsp) { // 콜백
         if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
-            alert("완료 -> imp_uid : " + rsp.imp_uid + "/ merchant_uid(orderKey" + rsp.merchant_uid);
-            
+            // 완료 -> imp_uid : imp_952657902622/ merchant_uid(orderKeyoder02
+            $("input[name='pay_merchantuid']").val(pay_merchantuid);
             // 결제 내용 저장
             paycomplete();
-            
         } else {
             alert("실패 : 코드(" + rsp.error_code + ") / 메세지(" + rsp.error_msg + ")");
             history.back(); // 다시 결제 페이지로 이동
@@ -372,17 +365,36 @@ function kakaoPay(data) {
 }
 
 // 결제 완료시 실행될 sql 업로드
-function paycomplete(){
+//paycomplete();
 
+function paycomplete(){
+	console.log(11);
+	let form = $("#paymentForm").serialize() ;
+	
 	$.ajax({
-		url:"/payment/pamentComplete.pm",
+		url: contextPath+"/payment/PaymentComplete.pm",
 		type:"post",
+		data : form,
 		dataType:"json",
-		success:function(result){
-			
+		success:function(result){	
+			console.log("결제등록 성공");
 		},
-		error:function(){
-			console.log("결제 등록 오류");
+		error:function(e){
+			console.log("결제 등록 오류 " + e);
 		}
 	})
 }
+
+//let formBox = $("#paymentForm");
+//console.log( $("input[name='project_name']").val() );
+//let user_no = $("input[name='user_no']").val();// 사용자 번호
+//let pro_no = $("input[name='pro_no']").val();// 프로젝트 번호
+//let d = new Date();
+//let dateCode =  ""+d.getFullYear()+d.getMonth()+d.getDate()+d.getDate()+d.getHours()+d.getMinutes()+d.getSeconds();
+//
+//let pay_merchantuid = $("input[name='pay_merchantuid']").val("test01").val;// pay_merchantuid 결제 코드
+//let merchant_uid = dateCode+"_"+user_no+"_"+pro_no;
+//$("input[name='pay_merchantuid']").val(dateCode+"_"+user_no+"_"+pro_no);
+//console.log( pay_merchantuid );
+
+

@@ -26,7 +26,6 @@ public class PaymentFrontController  extends HttpServlet {
 		String command = requestURI.substring(contextPath.length());
 		ActionForward af = null;
 		
-		
 		if(command.equals("/payment/PaymentComplete.pm")) { // 결제 정보 업로드 이동
 			try {
 				af = new PaymentComplete().execute(req, resp);
@@ -37,9 +36,10 @@ public class PaymentFrontController  extends HttpServlet {
 			af = new ActionForward();
 			af.setRedirect(false);
 			af.setPath("/app/payment/payment.jsp");
+		}else {
+			System.out.println("결제처리 last");
 		}
 		
-	
 		if(af != null) { 
 			if(af.isRedirect()) {
 				resp.sendRedirect(af.getPath());
