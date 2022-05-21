@@ -320,7 +320,6 @@ $(".paysubmit").click(function () {
 });
 
 
-
 // 카카오페이 API
 function kakaoPay(data) {
 	//결제 시간에 따른 값
@@ -384,17 +383,3 @@ function paycomplete(){
 		}
 	})
 }
-
-//let formBox = $("#paymentForm");
-//console.log( $("input[name='project_name']").val() );
-//let user_no = $("input[name='user_no']").val();// 사용자 번호
-//let pro_no = $("input[name='pro_no']").val();// 프로젝트 번호
-//let d = new Date();
-//let dateCode =  ""+d.getFullYear()+d.getMonth()+d.getDate()+d.getDate()+d.getHours()+d.getMinutes()+d.getSeconds();
-//
-//let pay_merchantuid = $("input[name='pay_merchantuid']").val("test01").val;// pay_merchantuid 결제 코드
-//let merchant_uid = dateCode+"_"+user_no+"_"+pro_no;
-//$("input[name='pay_merchantuid']").val(dateCode+"_"+user_no+"_"+pro_no);
-//console.log( pay_merchantuid );
-
-

@@ -24,28 +24,30 @@ public class PaymentFrontController  extends HttpServlet {
 		String requestURI = req.getRequestURI();
 		String contextPath = req.getContextPath();
 		String command = requestURI.substring(contextPath.length());
-		ActionForward af = null;
+		ActionForward forward = null;
 		
 		if(command.equals("/payment/PaymentComplete.pm")) { // 결제 정보 업로드 이동
 			try {
-				af = new PaymentComplete().execute(req, resp);
+				forward = new PaymentComplete().execute(req, resp);
 			} catch (Exception e) {
 				System.out.println("결제 정보 등록 실패" + e);
 			}
-		}else if(command.equals("/payment/Payment.pm")) { // 결제완료시 이동
-			af = new ActionForward();
-			af.setRedirect(false);
-			af.setPath("/app/payment/payment.jsp");
+		}else if(command.equals("/payment/Payment.pm")) {  // 결제 상세 
+			try {
+				forward = new PaymentView().execute(req, resp);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}else {
 			System.out.println("결제처리 last");
 		}
 		
-		if(af != null) { 
-			if(af.isRedirect()) {
-				resp.sendRedirect(af.getPath());
+		if(forward != null) { 
+			if(forward.isRedirect()) {
+				resp.sendRedirect(forward.getPath());
 				
 			}else {
-				RequestDispatcher dispatcher = req.getRequestDispatcher(af.getPath());
+				RequestDispatcher dispatcher = req.getRequestDispatcher(forward.getPath());
 				dispatcher.forward(req, resp);
 			}
 		}

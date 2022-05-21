@@ -22,4 +22,8 @@ public class PaymentDAO {
 		sqlSession.insert("Payment.payComplete", payment);
 		sqlSession.insert("Payment.payComplete2", payment);
 	}
+	
+	public PaymentVO PaymentView( int pro_no ) {
+		return sqlSession.selectOne("Payment.PaymentView", pro_no);
+	}
 }
