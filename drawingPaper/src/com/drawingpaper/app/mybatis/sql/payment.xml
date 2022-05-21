@@ -4,8 +4,16 @@
 <!-- SqlSssion Factory -->
 <mapper namespace="Payment">
 
-	<select id="paymentSelect" parameterType="" >
-
+	<select id="PaymentView" parameterType="_int" resultType="pament">
+		SELECT   
+		u.user_no,  u.user_name,  u.user_email,  u.user_status,  
+		u.user_images, u.user_bank,  u.user_accountnum, 
+		p.pro_no, p.user_no, p.pro_title, p.pro_category, p.pro_start, 
+		p.pro_end, p.pro_goalprice, p.pro_ticketprice, p.pro_repimage, 
+		p.pro_images, p.pro_ongoing, p.pro_achieveprice
+		FROM user u, project p
+		WHERE u.user_no =  p.user_no
+		AND p.pro_no = ${user_no};
 	</select>
 
 	<insert id="payComplete" parameterType="payment">
@@ -20,6 +28,5 @@
 		VALUES
 		(${user_no}, ${pro_no})
 	</insert>
-
 
 </mapper>
