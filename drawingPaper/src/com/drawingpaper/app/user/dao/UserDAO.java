@@ -1,40 +1,42 @@
 package com.drawingpaper.app.user.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import com.drawingpaper.app.mybatis.config.MyBatisConfig;
+import com.drawingpaper.app.user.vo.UserVO;
+
 
 public class UserDAO {
 
 	SqlSessionFactory sessionFactory = MyBatisConfig.getSqlsession_f();
 	SqlSession sqlSession;
 	
-	public UserDAO() { // ±âº»»ı¼ºÀÚ¸¦ ÅëÇØ ¼¼¼ÇÀ» ½É¾îÁà¾ß sql¹®ÀÌ ÀÛµ¿µÈ´Ù.
+	public UserDAO() { // å ì©ë³¸å ì™ì˜™å ì™ì˜™å ìŒ˜ëªŒì˜™ å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì‹¬ì–µì˜™å ì™ì˜™å ï¿½ sqlå ì™ì˜™å ì™ì˜™ å ìŒœë“¸ì˜™å ì‹«ëŒì˜™.
 		sqlSession = sessionFactory.openSession(true);
 	}
 	
-
-	 // ÀÏ¹İ ·Î±×ÀÎ ·Î±×¾Æ¿ô À¯È¿¼ºÀÌ ¸ğµÎ true¸é ·Î±×ÀÎ ¼º°ø
-	   // ·Î±×ÀÎ À¯È¿¼º Ã¼Å©
+	// ì¼ë°˜ ë¡œê·¸ì¸ ë¡œê·¸ì•„ì›ƒ ìœ íš¨ì„±ì´ ëª¨ë‘ trueë©´ ë¡œê·¸ì¸ ì„±ê³µ
+	   // ë¡œê·¸ì¸ ìœ íš¨ì„± ì²´í¬
 	   public boolean emailCheck(String user_email) {
 	      return (Integer)(sqlSession.selectOne("User.emailCheck", user_email)) == 1;
 	   }
 	   
-	   // ºñ¹Ğ¹øÈ£ À¯È¿¼º Ã¼Å©
+	   // ë¹„ë°€ë²ˆí˜¸ ìœ íš¨ì„± ì²´í¬
 	   public boolean pwCheck(String user_pw) {
 	      return (Integer)(sqlSession.selectOne("User.pwCheck", user_pw)) == 1;
 	   }
 	   
-	   // ·Î±×¾Æ¿ô
+	   // ë¡œê·¸ì•„ì›ƒ
 	   public boolean logout() {
 	      return true;
 	   }
 	   
-	   // Ä«Ä«¿À api È¸¿ø°¡ÀÔ
+	   // ì¹´ì¹´ì˜¤ api íšŒì›ê°€ì…
 	   public int kakaoJoin(HashMap<String, String> kakaoJoinMap){
 	      int userNumber = 0;
 	      try {
@@ -44,16 +46,16 @@ public class UserDAO {
 	      return userNumber;
 	   }
 	   
-	   // Ä«Ä«¿À api ·Î±×ÀÎ
+	   // ì¹´ì¹´ì˜¤ api ë¡œê·¸ì¸
 	   public Map<String, String> kakaoLogin(String user_email) {
 	      System.out.println("dao");
 	      return sqlSession.selectOne("User.kakaoSelect", user_email);
 	   }
 
-	   // ¸ŞÀÎ È­¸é ¼¼¼Ç(À¯Àú ÀÌ¸§)¶ç¿öÁÖ±â
+	   // ë©”ì¸ í™”ë©´ ì„¸ì…˜(ìœ ì € ì´ë¦„)ë„ì›Œì£¼ê¸°
 	   
 	   
-	// ÀÏ¹İ ·Î±×ÀÎ
+	// ì¼ë°˜ ë¡œê·¸ì¸
 		public boolean login(String user_email, String user_pw) {
 			HashMap<String, String> userMap = new HashMap<>();
 			userMap.put("user_email", user_email);
@@ -62,23 +64,37 @@ public class UserDAO {
 		}
 		
 		
-		//ÀÌ¸ŞÀÏ(id) °Ë»ç 	-> true(Áßº¹)
+		//ì´ë©”ì¼(id) ê²€ì‚¬ 	-> true(ì¤‘ë³µ)
 		public boolean checkEmail(String user_email) {
 			return (Integer)(sqlSession.selectOne("User.checkEmail", user_email)) == 1;
 		}
 		
-		//ÀÌ¸ŞÀÏ·Î È¸¿ø°¡ÀÔ
+		//ì´ë©”ì¼ë¡œ íšŒì›ê°€ì…
 		public void joinEmail(HashMap<String, String> emailJoinInfo) {
 			sqlSession.insert("User.joinEmail", emailJoinInfo);
 		}
 
-		//ÀÌ¸ŞÀÏ·Î À¯Àú¹øÈ£ Ã£±â
+		//ì´ë©”ì¼ë¡œ ìœ ì €ë²ˆí˜¸ ì°¾ê¸°
 		public int getUserNoByEmail(String user_email) {
 			return (Integer)sqlSession.selectOne("User.getUserNoByEmail", user_email);
 		}
 		
-		//Ä«Ä«¿À È¸¿ø°¡ÀÔ
+		//ì¹´ì¹´ì˜¤ íšŒì›ê°€ì…
 		public void joinKakao(HashMap<String, String> kakaoJoinInfo) {
 			sqlSession.insert("User.joinKakao", kakaoJoinInfo);
 		}
+	
+	// í”„ë¡œì íŠ¸ì—ì„œ ìœ ì €ë²ˆí˜¸ë¥¼ ë°›ì•„ í”„ë¡œì íŠ¸ë¡œ ì „ë‹¬
+	public String getUserName(int userNo) {
+		return sqlSession.selectOne("User.getName", userNo);
 	}
+	
+	// í”„ë¡œì íŠ¸ì—ì„œ ìœ ì € ë²ˆí˜¸ë¥¼ ë°›ì•„ í”„ë¡œì íŠ¸ë””í…Œì¼ë¡œ ì „ë‹¬
+	public Map<String, String> getPuser(int userNo){
+		return sqlSession.selectOne("User.getPuser", userNo);
+	}
+
+
+	
+	// å ì™ì˜™å ì™ì˜™ í™”å ì™ì˜™ å ì™ì˜™å ì™ì˜™(å ì™ì˜™å ì™ì˜™ å ì‹±ëªŒì˜™)å ì™ì˜™å ì™ì˜™æ®®å ï¿½
+}
